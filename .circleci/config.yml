@@ -15,7 +15,7 @@ executors:
       TERM: dumb
 
 jobs:
-  get_dependencies:
+  build:
     executor: nasa-photo-android-executor
     steps:
       - checkout
