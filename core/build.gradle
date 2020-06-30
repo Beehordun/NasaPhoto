@@ -16,6 +16,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        buildConfigField 'String', 'NASA_API_KEY', nasaAPIKey
     }
 
     buildTypes {
@@ -38,6 +39,9 @@ dependencies {
 
     implementation rootProject.libs.lifecycle
     implementation rootProject.libs.coreKtx
+
+    // Coroutines
+    implementation rootProject.libs.coroutine
 
     // Okhttp & Retrofit
     implementation rootProject.libs.okhttp

@@ -1,5 +1,6 @@
-package com.example.core.Interceptors
+package com.example.core.interceptors
 
+import com.example.core.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -12,7 +13,7 @@ class AuthInterceptor @Inject constructor(
         val original: Request = chain.request()
 
         val request: Request = original.newBuilder()
-            .header("x-api-key", "3G1dRnqxojY5smDz0xWVmhVasGoUCAK5Hb1ldwng")
+            .header("x-api-key", BuildConfig.NASA_API_KEY)
             .method(original.method(), original.body())
             .build()
 

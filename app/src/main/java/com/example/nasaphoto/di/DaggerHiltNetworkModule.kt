@@ -1,8 +1,8 @@
 package com.example.nasaphoto.di
 
 import android.content.Context
-import com.example.core.Interceptors.AuthInterceptor
-import com.example.core.Interceptors.NoInternetConnectionInterceptor
+import com.example.core.interceptors.AuthInterceptor
+import com.example.core.interceptors.NoInternetConnectionInterceptor
 import com.example.data.remote.NasaApi
 import com.example.nasaphoto.BuildConfig
 import dagger.Module
@@ -22,13 +22,14 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object DaggerHiltNetworkModule {
 
-    private const val BASE_URL = "https://api.nasa.gov/"
+    private const val baseUrl = BuildConfig.BASE_URL
+    private const val TIME_OUT_SECONDS = 10L
 
     @Provides
     @Singleton
     fun provideNewsApi(okHttpClient: OkHttpClient): NasaApi {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
@@ -39,14 +40,14 @@ object DaggerHiltNetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    internal fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val loggerInterceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
             else HttpLoggingInterceptor.Level.NONE
         }
 
         return OkHttpClient.Builder()
-            .callTimeout(10, TimeUnit.SECONDS)
+            .callTimeout(TIME_OUT_SECONDS, TimeUnit.SECONDS)
             .addInterceptor(NoInternetConnectionInterceptor(context))
             .addInterceptor(loggerInterceptor)
             .addInterceptor(AuthInterceptor())

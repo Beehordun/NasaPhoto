@@ -53,6 +53,11 @@ dependencies {
 
     // Test dependencies
     testImplementation rootProject.libs.junit
+    testImplementation rootProject.libs.testRunner
+    testImplementation rootProject.libs.testRules
+    testImplementation rootProject.libs.archTestCore
+    testImplementation rootProject.libs.coroutineTest
+    testImplementation rootProject.libs.testCore
     testImplementation rootProject.libs.mockitoCore
     testImplementation rootProject.libs.mockitoKotlin
 

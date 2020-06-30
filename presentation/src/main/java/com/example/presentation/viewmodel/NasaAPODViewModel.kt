@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.dispatcher.AppCoroutineDispatchers
 import com.example.core.exceptions.NoConnectivityException
 import com.example.domain.usecase.GetNasaAPODForDateUseCase
 import com.example.domain.usecase.GetNasaAPODUseCase
@@ -17,13 +18,15 @@ import kotlinx.coroutines.withContext
 class NasaAPODViewModel @ViewModelInject constructor(
     private val getNasaAPODUseCase: GetNasaAPODUseCase,
     private val getNasaAPODForDateUseCase: GetNasaAPODForDateUseCase,
-    private val nasaAPODMapper: NasaAPODMapper
+    private val nasaAPODMapper: NasaAPODMapper,
+    private val dispatcher: AppCoroutineDispatchers
 ): ViewModel() {
 
     private var _nasaAPODLiveData = MutableLiveData<ViewState<NasaAPOD>>()
     var nasaAPODLiveData = _nasaAPODLiveData
 
     fun getNasaAstronomyPictureOfDay() {
+        _nasaAPODLiveData.postValue(ViewState.Loading())
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 kotlin.runCatching {
@@ -47,8 +50,9 @@ class NasaAPODViewModel @ViewModelInject constructor(
     }
 
     fun getNasaAstronomyPictureOfDayForDate(date: String) {
+        _nasaAPODLiveData.postValue(ViewState.Loading())
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(dispatcher.io) {
                 kotlin.runCatching {
                     getNasaAPODForDateUseCase.getNasaAstronomyPictureOfDayForDate(date)
                 }.onSuccess {

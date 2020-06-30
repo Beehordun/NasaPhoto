@@ -16,6 +16,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'BASE_URL', baseUrl
+        buildConfigField 'String', 'YOUTUBE_API_KEY', youTubeAPiKey
     }
 
     compileOptions {
@@ -60,6 +62,7 @@ android {
 }
 
 dependencies {
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(':core')
@@ -95,12 +98,23 @@ dependencies {
     implementation rootProject.libs.coreKtx
     implementation rootProject.libs.viewModel
     implementation rootProject.libs.fragmentKtx
+    implementation rootProject.libs.lifecycleCommon
 
     // Okhttp & Retrofit
     implementation rootProject.libs.okhttp
     implementation rootProject.libs.loggingInterceptor
     implementation rootProject.libs.okhttpUrlConnection
     implementation rootProject.libs.retrofit
+
+    // Coroutines
+    implementation rootProject.libs.coroutine
+
+    // Exoplayer
+    implementation rootProject.libs.exoplayerCore
+    implementation rootProject.libs.exoplayerUI
+
+    // Shimmer
+    implementation rootProject.libs.shimmer
 
     implementation rootProject.libs.gson
     implementation rootProject.libs.gsonConverter

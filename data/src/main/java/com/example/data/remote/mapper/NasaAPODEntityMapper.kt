@@ -11,6 +11,7 @@ class NasaAPODEntityMapper @Inject constructor() {
             title = nasaAPODModel.title,
             explanation = nasaAPODModel.explanation,
             mediaType = nasaAPODModel.mediaType,
-            mediaUrl = nasaAPODModel.mediaUrl
+            mediaUrl = nasaAPODModel.mediaUrl ?: "",
+            url = nasaAPODModel.url
         )
 }

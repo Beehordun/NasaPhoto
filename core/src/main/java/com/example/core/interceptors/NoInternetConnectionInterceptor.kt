@@ -1,4 +1,4 @@
-package com.example.core.Interceptors
+package com.example.core.interceptors
 
 import android.content.Context
 import com.example.core.connectivity.NetworkInformation.isConnectionOn

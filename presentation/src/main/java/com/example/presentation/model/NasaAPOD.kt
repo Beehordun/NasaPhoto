@@ -4,5 +4,6 @@ data class NasaAPOD(
     val explanation: String,
     val mediaUrl: String,
     val mediaType: String,
-    val title: String
+    val title: String,
+    val url: String
 )

@@ -5,7 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.DatePicker
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.FrameLayout
 import com.example.nasaphoto.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.date_picker_view.view.*
@@ -15,7 +15,7 @@ class DatePickerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr),
+) : FrameLayout(context, attrs, defStyleAttr),
     LayoutContainer,
     DatePickerDialog.OnDateSetListener {
 

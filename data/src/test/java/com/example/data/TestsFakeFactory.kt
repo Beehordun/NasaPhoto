@@ -9,13 +9,15 @@ object TestsFakeFactory  {
     private val explanationString = UUID.randomUUID().toString()
     private val mediaTypeString = UUID.randomUUID().toString()
     private val mediaUrlString = UUID.randomUUID().toString()
+    private val urlString = UUID.randomUUID().toString()
 
     fun makeFakeNasaAPODModel(): NasaAPODModel {
         return NasaAPODModel(
             title = titleString,
             explanation = explanationString,
             mediaType = mediaTypeString,
-            mediaUrl = mediaUrlString
+            mediaUrl = mediaUrlString,
+            url = urlString
         )
     }
 
@@ -24,7 +26,8 @@ object TestsFakeFactory  {
             title = titleString,
             explanation = explanationString,
             mediaType = mediaTypeString,
-            mediaUrl = mediaUrlString
+            mediaUrl = mediaUrlString,
+            url = urlString
         )
     }
 }

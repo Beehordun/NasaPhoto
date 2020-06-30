@@ -4,15 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".NasaAPODActivity">
 
-    <com.example.nasaphoto.view.DatePickerView
-        android:layout_marginTop="@dimen/margin_space"
-        android:layout_marginEnd="@dimen/margin_space"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_space"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_space"
+                android:textAlignment="center"
+                android:textSize="@dimen/title_text_size"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@id/date_picker"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Hurray Nasa Picture of the day" />
+
+            <com.example.nasaphoto.view.DatePickerView
+                android:id="@+id/date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_space"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/nasa_photo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/nasa_photo_height"
+                android:layout_margin="@dimen/margin_space"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+            <TextView
+                android:id="@+id/no_internet_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_space"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:textSize="@dimen/title_text_size"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="No internet connection" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/image_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/nasa_photo_height"
+                android:layout_margin="@dimen/margin_space"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text">
+
+                <View
+                    android:id="@+id/news_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/light_gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <com.google.android.youtube.player.YouTubeThumbnailView
+                android:id="@+id/video_thumbnail_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/nasa_photo_height"
+                android:layout_margin="@dimen/margin_space"
+                android:layout_marginTop="@dimen/margin_top_medium"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+            <TextView
+                android:id="@+id/explanation_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_space"
+                android:lineSpacingExtra="@dimen/text_line_spacing"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nasa_photo"
+                tools:text="Nasa Nasa Hey man of the day" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/zoom_play_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_space"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/date_picker"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        tools:src="@drawable/play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
