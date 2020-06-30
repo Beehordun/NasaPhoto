@@ -2,14 +2,16 @@ package com.example.nasaphoto.util
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import javax.inject.Inject
+
 
 class ImageLoader @Inject constructor() {
 
@@ -24,40 +26,28 @@ class ImageLoader @Inject constructor() {
             .into(image)
     }
 
-    fun loadImageWithCallbacks(context:Context,
-                               imageUrl: String,
-                               image: ImageView,
-                               @DrawableRes placeholderResourceId: Int = -1,
-                               onFailedCallback: () -> Unit,
-                               onSuccessCallback: () -> Unit
+    fun loadBackgroundImageWithCallback(
+        context:Context,
+        imageUrl: String,
+        @DrawableRes placeholderResourceId: Int = -1,
+        onFailedCallback: () -> Unit,
+        onSuccessCallback: (resource: Drawable) -> Unit
     ) {
-
         Glide.with(context)
             .load(imageUrl)
-            .placeholder(placeholderResourceId)
-            .centerCrop()
-            .listener(object: RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    onFailedCallback.invoke()
-                    return false
-                }
+            .into(object : CustomTarget<Drawable?>() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 
+                override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+                    onFailedCallback.invoke()
+                }
                 override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    onSuccessCallback.invoke()
-                    return false
+                    resource: Drawable,
+                    transition: Transition<in Drawable?>?
+                ) {
+                    onSuccessCallback.invoke(resource)
                 }
             })
-            .into(image)
+
     }
 }

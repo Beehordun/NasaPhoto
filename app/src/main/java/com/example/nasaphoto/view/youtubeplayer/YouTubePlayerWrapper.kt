@@ -1,7 +1,10 @@
 package com.example.nasaphoto.view.youtubeplayer
 
 import android.app.FragmentManager
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
 import androidx.annotation.IdRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.core.videoplayer.VideoUtil
 import com.example.nasaphoto.util.clearShimmer
 import com.facebook.shimmer.ShimmerFrameLayout
@@ -51,7 +54,7 @@ class YouTubePlayerWrapper @Inject constructor() {
         youTubeThumbnail: YouTubeThumbnailView,
         videoUrl: String,
         apiKey: String,
-        shimmerFrameLayout: ShimmerFrameLayout?
+        loadImageBackground: (drawable: Drawable) -> Unit
     ) {
         youTubeThumbnail.initialize(apiKey,
             object : YouTubeThumbnailView.OnInitializedListener {
@@ -67,7 +70,7 @@ class YouTubePlayerWrapper @Inject constructor() {
                             youTubeThumbnailView: YouTubeThumbnailView,
                             s: String
                         ) {
-                            shimmerFrameLayout?.clearShimmer()
+                            loadImageBackground.invoke(youTubeThumbnailView.drawable)
                             youTubeThumbnailLoader.release()
                         }
 
@@ -75,7 +78,7 @@ class YouTubePlayerWrapper @Inject constructor() {
                             youTubeThumbnailView: YouTubeThumbnailView,
                             errorReason: YouTubeThumbnailLoader.ErrorReason
                         ) {
-                            shimmerFrameLayout?.clearShimmer()
+                           //Nothing
                         }
                     })
                 }

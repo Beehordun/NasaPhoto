@@ -2,13 +2,10 @@ package com.example.nasaphoto
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View.GONE
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nasaphoto.util.DateUtil
-import com.example.nasaphoto.util.clearShimmer
-import com.example.nasaphoto.util.displayShimmer
 import com.example.nasaphoto.util.visible
 import com.example.nasaphoto.util.invisible
 import com.example.nasaphoto.util.gone
@@ -94,24 +91,20 @@ class NasaAPODActivity : AppCompatActivity() {
        nasaAPODViewModel.nasaAPODLiveData.observe(owner) { viewState ->
            when(viewState) {
                is ViewState.Loading -> {
-                   image_shimmer.displayShimmer()
-                   nasa_photo.visibility = GONE
+                   background_shade.invisible()
                }
                is ViewState.Success -> {
                    handleDataFetchedSuccess(viewState.data)
                    nasaAPOD = viewState.data
                }
                is ViewState.Error.NoConnectionError -> {
-                   image_shimmer.clearShimmer()
-                   nasa_photo.invisible()
-
                    no_internet_text.apply {
                        text = getString(R.string.no_internet_text)
                        visible()
                    }
                }
                is ViewState.Error.ServerError -> {
-                   image_shimmer.clearShimmer()
+                   background_shade.invisible()
                }
            }
        }
@@ -137,6 +130,7 @@ class NasaAPODActivity : AppCompatActivity() {
     private fun handleDataFetchedSuccess(data: NasaAPOD) {
         title_text.text = data.title
         explanation_text.text = data.explanation
+        background_shade.visible()
         if (data.mediaType == IMAGE) {
            showNasaPhoto(data)
         } else {
@@ -156,16 +150,16 @@ class NasaAPODActivity : AppCompatActivity() {
 
     private fun showNasaPhoto(data: NasaAPOD) {
         zoom_play_btn.setImageDrawable(getDrawable(R.drawable.zoom))
-        imageLoader.loadImageWithCallbacks(
-            context =this,
-            imageUrl = data.mediaUrl,
-            image = nasa_photo,
-            placeholderResourceId = R.color.light_gray,
-            onFailedCallback = { image_shimmer.clearShimmer() },
-            onSuccessCallback = { image_shimmer.clearShimmer() }
-        )
 
-        nasa_photo.visible()
+        imageLoader.loadBackgroundImageWithCallback(
+            context = this,
+            imageUrl = data.url,
+            onFailedCallback = {  println()},
+            onSuccessCallback = { drawable ->
+                main_layout.background = drawable
+                println()
+            }
+        )
         video_thumbnail_view.gone()
     }
 
@@ -173,11 +167,10 @@ class NasaAPODActivity : AppCompatActivity() {
         youTubePlayerWrapper.showVideoThumbnail(
             video_thumbnail_view,
             data.url,
-            youtubeApiKey,
-            image_shimmer)
+            youtubeApiKey) {
+            main_layout.background = it
+        }
 
         zoom_play_btn.setImageDrawable(getDrawable(R.drawable.play))
-        nasa_photo.invisible()
-        video_thumbnail_view.visible()
     }
 }
