@@ -8,4 +8,5 @@
     <dimen name="nasa_photo_height">300dp</dimen>
     <dimen name="margin_top_medium">50dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
+    <dimen name="text_padding">10dp</dimen>
 </resources>
