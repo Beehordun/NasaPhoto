@@ -11,14 +11,8 @@ Nasa Photo fetches the Nasa Astronomy Photo/Video of the day from the NASA API. 
 * Continuous integration with Circle CI
 
 ## Running the project
-To run the project, check the prerequisites below, then clone the repo and build
+To run the project, clone the repo and build
  on Android studio or download the zip file
-
-## Prerequisites
-*   Android Studio IDE 3.0+
-*   Android SDK v28
-*   Android Build Tools v28.0.3
-*   Gradle 4.6
 
 ## Libraries
 *   Retrofit 2
