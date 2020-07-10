@@ -3,7 +3,7 @@ Nasa Photo fetches the Nasa Astronomy Photo/Video of the day from the NASA API. 
 
 ## Features
 * Clean code with MVVM architecture
-* UI tests with Fakes and Mocks
+* Unit tests with Fakes and Mocks
 * Video streaming with Exoplayer/YoutubeVideo player based on the video
 * Dependency injection with Dagger Hilt
 * Static analysis using detekt and Ktlint 
